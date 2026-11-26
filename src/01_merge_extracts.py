@@ -10,6 +10,10 @@ import argparse
 from pathlib import Path
 
 import pandas as pd
+# Racine du dépôt : src/ -> ..
+ROOT = Path(__file__).resolve().parents[1]
+DOSSIER_EXTRAITS = ROOT / "data" / "interim" / "extract"
+SORTIE_CSV = DOSSIER_EXTRAITS / "extract_all.csv"
 
 # Extraits produits par les notebooks d'extraction (adapter les noms si besoin, notamment 2024).
 FICHIERS = [
@@ -111,8 +115,8 @@ def fusionner(dossier, sortie):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Fusionne les extraits annuels en un seul CSV.")
-    ap.add_argument("--dossier", default=".", help="dossier contenant les extraits (défaut : dossier courant)")
-    ap.add_argument("--sortie", default="extract_all.csv", help="CSV de sortie (défaut : extract_all.csv)")
+    ap.add_argument("--dossier", default=DOSSIER_EXTRAITS, help="dossier contenant les extraits (défaut : dossier courant)")
+    ap.add_argument("--sortie", default=SORTIE_CSV, help="CSV de sortie (défaut : extract_all.csv)")
     args = ap.parse_args()
 
     fusionner(args.dossier, args.sortie)
